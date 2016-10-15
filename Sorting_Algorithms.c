@@ -106,18 +106,18 @@ int getUniqueNumber(int p[], int i)
 
 void copyMatrix(int p[],int r[])
 {
-     int i;
-     for(i=0;i<N;i++)
-         r[i] = p[i];
+    int i;
+    for(i=0;i<N;i++)
+        r[i] = p[i];
 }
 
 void printToTxt(struct data *Results)
 {
-   int count,i,j=0;
-   double avgTime[4],avgSwaps[4]; //Declaring average time and changes matrices.
-   FILE *times,*swaps;
-   times = fopen("Times.txt","w"); //Opening Times.txt file for writing.
-   swaps = fopen("Swaps.txt","w"); //Opening Swaps.txt file for writing.
+    int count,i,j=0;
+    double avgTime[4],avgSwaps[4]; //Declaring average time and changes matrices.
+    FILE *times,*swaps;
+    times = fopen("Times.txt","w"); //Opening Times.txt file for writing.
+    swaps = fopen("Swaps.txt","w"); //Opening Swaps.txt file for writing.
 
 
     //Printing to Times.txt file
@@ -128,21 +128,21 @@ void printToTxt(struct data *Results)
     for(i=0;i<4;i++)
         avgSwaps[i]=0; //Nullifying matrix fields.
 
-   fprintf(times,"ARRAY SIZE=%d\n",N);
-   fprintf(times,"\t\tTABLE OF EXECUTION TIMES (in seconds)\n");
-   fprintf(times,"\tBubble_sort \tSelection_sort \tInsertion_sort\tQuick_sort\n");
-   fprintf(times,"\t===========     =============   =============   ==========\n");
+    fprintf(times,"ARRAY SIZE=%d\n",N);
+    fprintf(times,"\t\tTABLE OF EXECUTION TIMES (in seconds)\n");
+    fprintf(times,"\tBubble_sort \tSelection_sort \tInsertion_sort\tQuick_sort\n");
+    fprintf(times,"\t===========     =============   =============   ==========\n");
 
     for(count=0;count<pass;count++)
     {
-       for(i=0;i<4;i++)
-       {
+        for(i=0;i<4;i++)
+        {
             fprintf(times,"\t%d\t",Results[count].Time[i]); //Printing times to Times.txt file.
             avgTime[i] += Results[i].Time[i]; //Summing up execution times for each method.
 
-       }
+        }
 
-    fprintf(times,"\n\n");
+        fprintf(times,"\n\n");
     }
     for(i=0;i<4;i++)
         avgTime[i]=avgTime[i]/pass; //Getting average time for every method.
@@ -152,7 +152,7 @@ void printToTxt(struct data *Results)
     fclose(times); //Closing Times.txt file.
 
 
-/*=================================================================================================================*/
+    /*=================================================================================================================*/
     //Printing to Swaps.txt file
 
     fprintf(swaps,"ARRAY SIZE=%d\n",N);
@@ -163,15 +163,15 @@ void printToTxt(struct data *Results)
     for(count=0;count<pass;count++)
     {
         for(i=0;i<4;i++)
-       {
+        {
             fprintf(swaps,"\t%d\t",Results[count].Swaps[i]); // Printing number of swaps to Swaps.txt file.
             avgSwaps[i] += Results[i].Swaps[i]; //Summing up number of swaps.
-       }
+        }
 
-    fprintf(swaps,"\n\n");
+        fprintf(swaps,"\n\n");
     }
-        for(i=0;i<4;i++)
-            avgSwaps[i]=avgSwaps[i]/pass; //Getting average number of swaps.
+    for(i=0;i<4;i++)
+        avgSwaps[i]=avgSwaps[i]/pass; //Getting average number of swaps.
 
     fprintf(swaps,"Avg:   %11.1f\t%11.1f\t\t%11.1f\t%11.1f\n",avgSwaps[0],avgSwaps[1],avgSwaps[2],avgSwaps[3]);
     fclose(swaps); //Closing Swaps.txt file.
@@ -196,87 +196,87 @@ int straight_selection(int p[])
         }
         p[k]=p[i] ;
         p[i]=min;
-     }
-return swaps;
+    }
+    return swaps;
 }
 
 int straight_insertion(int p[])
 {
-     int i,x,j,swaps=0;
-     for (i = 1; i < N; i++)
-     {
-         x = p[i];
-         j = i-1;
-         while ((x < p[j]) && (j >= 0))
-         {
-               p[j+1] = p[j] ;
-               j = j-1 ;
-               swaps += 1; //Counting number of swaps.
-         }
-         p[j+1] = x ;
+    int i,x,j,swaps=0;
+    for (i = 1; i < N; i++)
+    {
+        x = p[i];
+        j = i-1;
+        while ((x < p[j]) && (j >= 0))
+        {
+            p[j+1] = p[j] ;
+            j = j-1 ;
+            swaps += 1; //Counting number of swaps.
+        }
+        p[j+1] = x ;
 
-     }
-return swaps;
+    }
+    return swaps;
 }
 
 int bubble_sort(int p[])
 {
-     int i,j,temp,swaps=0;
+    int i,j,temp,swaps=0;
 
-     for(i=1; i<N; i++)
-         for (j=N-1; j>=i; j--)
-         {
-             if (p[j-1] > p[j])
-             {
+    for(i=1; i<N; i++)
+        for (j=N-1; j>=i; j--)
+        {
+            if (p[j-1] > p[j])
+            {
                 temp = p[j-1];
                 p[j-1] = p[j] ;
                 p[j] = temp ;
                 swaps += 1; //Counting number of swaps.
-             }
-         }
-return swaps;
+            }
+        }
+    return swaps;
 }
 
 int quick_sort(int left, int right, int p[])
 {
-     int i, j, mid, x, temp,swaps=0;
-     if (left < right)
-     {
+    int i, j, mid, x, temp,swaps=0;
+    if (left < right)
+    {
         i = left;
         j = right;
         mid = (left+right)/2;
         x = p[mid];
         while (i < j)
         {
-              while (p[i] < x)
-              {
-                    i++;
-              }
-              while (p[j] > x)
-              {
-                    j--;
-              }
-              if (i < j)
-              {
-                 if (p[i] == p[j])
-                 {
+            while (p[i] < x)
+            {
+                i++;
+            }
+            while (p[j] > x)
+            {
+                j--;
+            }
+            if (i < j)
+            {
+                if (p[i] == p[j])
+                {
                     if (i<mid)
-                       i++;
+                        i++;
                     if (j>mid)
-                       j--;
-                 }
-                 else
-                 {
-                     temp = p[i];
-                     p[i] = p[j];
-                     p[j] = temp;
-                     swaps += 1; //Counting number of swaps.
-                 }
-              }
+                        j--;
+                }
+                else
+                {
+                    temp = p[i];
+                    p[i] = p[j];
+                    p[j] = temp;
+                    swaps += 1; //Counting number of swaps.
+                }
+            }
         }
         quick_sort(left,j-1,p);
         quick_sort(j+1,right,p);
-     }
-return swaps;
+    }
+    return swaps;
 }
 
